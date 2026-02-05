@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+
+<!-- Search Form -->
+<form method="GET" class="mb-3 d-flex">
+    <input type="text"
+           name="q"
+           class="form-control me-2"
+           placeholder="Search title..."
+           value="{{ request.args.get('q','') }}">
+    <button class="btn btn-primary">Search</button>
+</form>
+
+<div class="card-box">
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h3 class="page-title">
+            Dashboard
+        </h3>
+        <a href="/add" class="btn btn-main text-white">
+            ➕ Add New
+        </a>
+    </div>
+
+    <table class="table table-bordered table-hover">
+        <thead class="table-dark text-center">
+            <tr>
+                <th>Sr No</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Date</th>
+                <th class="text-center">Actions</th>
+            </tr>
+        </thead>
+
+        <tbody>
+        {% for post in posts.items %}
+<tr>
+    <td class="text-center">{{ loop.index }}</td>
+    <td>{{ post.title }}</td>
+    <td>{{ post.desc }}</td>
+    <td class="text-center">{{ post.date.strftime("%d-%m-%Y") }}</td>
+    <td class="text-center">
+        <a href="/edit/{{ post.id }}" class="btn btn-sm btn-warning">✏️ Edit</a>
+        <a href="/delete/{{ post.id }}" class="btn btn-sm btn-danger" onclick="return confirm('Delete this record?')">🗑 Delete</a>
+    </td>
+</tr>
+{% endfor %}
+
+
+        {% if posts.items |length == 0 %}
+            <tr>
+                <td colspan="5" class="text-center text-muted">
+                    No Records Found
+                </td>
+            </tr>
+            
+        {% endif %}
+        </tbody>
+    </table>
+
+</div>
+
+<!-- Pagination -->
+<div class="mt-3 text-center">
+    {% if posts.has_prev %}
+        <a href="?page={{ posts.prev_num }}" class="btn btn-sm btn-secondary">
+            ◀ Prev
+        </a>
+    {% endif %}
+
+    Page {{ posts.page }} of {{ posts.pages }}
+
+    {% if posts.has_next %}
+        <a href="?page={{ posts.next_num }}" class="btn btn-sm btn-secondary">
+            Next ▶
+        </a>
+    {% endif %}
+</div>
+ 
+{% endblock %}

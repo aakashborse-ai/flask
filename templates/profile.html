@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="card-box">
+
+    <h3 class="page-title">My Profile</h3>
+
+    <p><b>Email:</b> {{ user.email }}</p>
+    <p><b>Joined:</b> {{ user.created_at.strftime("%d-%m-%Y") }}</p>
+
+    <a href="/dashboard">dashboard</a>
+
+</div>
+
+{% endblock %}

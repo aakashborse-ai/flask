@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="card-box">
+    <h3>Edit Post</h3>
+
+    <form method="POST">
+        <div class="mb-3">
+            <label>Title</label>
+            <input type="text" name="title" class="form-control" value="{{ post.title }}" required>
+        </div>
+
+        <div class="mb-3">
+            <label>Description</label>
+            <textarea name="desc" class="form-control" rows="5" required>{{ post.desc }}</textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Update</button>
+    </form>
+</div>
+
+{% endblock %}
